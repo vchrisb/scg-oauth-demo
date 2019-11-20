@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service
+          uri: lb://service
+          predicates:
+            - Path=/service/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        - id: resource
+          uri: lb://resource
+          predicates:
+            - Path=/resource/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: uaa
+            client-id: gateway
+            client-secret: gatewaysecret
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email,resource.read,resource.write
+        provider:
+          uaa:
+            issuer-uri: http://localhost:8080/oauth/token
+server:
+  port: 8081
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    registry-fetch-interval-seconds: 5
+  instance:
+    preferIpAddress: true
