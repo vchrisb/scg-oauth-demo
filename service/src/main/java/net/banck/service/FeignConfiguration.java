@@ -1,15 +1,27 @@
 package net.banck.service;
 
 import feign.RequestInterceptor;
-import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
+import feign.RequestTemplate;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.oauth2.client.OAuth2ClientContext;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.AbstractOAuth2Token;
+
 
 public class FeignConfiguration {
+
     @Bean
-    public RequestInterceptor oauth2FeignRequestInterceptor(OAuth2ClientContext oAuth2ClientContext,
-                                                            OAuth2ProtectedResourceDetails resource) {
-        return new OAuth2FeignRequestInterceptor(oAuth2ClientContext, resource);
+    public RequestInterceptor JwtTokenRelay ( ) {
+        return new RequestInterceptor() {
+            @Override
+            public void apply (RequestTemplate requestTemplate) {
+                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+                if(auth == null) return;
+                AbstractOAuth2Token token = (AbstractOAuth2Token) auth.getCredentials();
+                requestTemplate.header("Authorization", "Bearer " + token.getTokenValue());
+
+            }
+        };
     }
 }
+

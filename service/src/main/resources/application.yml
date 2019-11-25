@@ -1,9 +1,6 @@
 spring:
   application:
     name: service
-# disable cache for Spring Cloud Loadbalancer
-  cache:
-    type: none
 
   cloud:
     loadbalancer:
@@ -25,12 +22,3 @@ eureka:
     registry-fetch-interval-seconds: 5
   instance:
     preferIpAddress: true
-
-security:
-  oauth2:
-    client:
-      clientId: webappclient
-      clientSecret: webappclientsecret
-      accessTokenUri: http://localhost:8080/oauth/token
-      grant-type: client_credentials
-      scope: resource.read
