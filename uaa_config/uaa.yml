@@ -14,22 +14,32 @@ oauth:
       - uaa.user
       - approvals.me
       - oauth.approvals
+      - resource.read
+      - resource.write
+
   clients:
     webappclient:
-      name: webappclient
+      id: webappclient
       secret: webappclientsecret
-      authorized-grant-types: authorization_code
-      scope: openid,profile,email,resource.read,resource.write
-      authorities: uaa.resource
+      authorized-grant-types: client_credentials,refresh_token
+      scope: resource.read,resource.write
+      authorities: uaa.resource,resource.read,resource.write
       redirect-uri: http://127.0.0.1:8083/login/oauth2/code/uaa
+
     gateway:
-      name: gateway
+      id: gateway
       secret: gatewaysecret
       authorized-grant-types: authorization_code
       scope: openid,profile,email,resource.read,resource.write
       authorities: uaa.resource
       redirect-uri: http://127.0.0.1:8081/login/oauth2/code/gateway
 
+    admin2:
+      id: admin2
+      secret: adminsecret
+      authorized-grant-types: client_credentials
+      scope: none
+      authorities: uaa.resource,resource.read,resource.write,uaa.admin,clients.admin,clients.read,clients.write,clients.secret
       
     admin:
       id: admin

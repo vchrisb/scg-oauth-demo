@@ -12,17 +12,6 @@ spring:
 
   security:
     oauth2:
-      client:
-        registration:
-          gateway:
-            provider: uaa
-            client-id: gateway
-            client-secret: gatewaysecret
-            authorization-grant-type: authorization_code
-            scope: openid,profile,email,resource.read,resource.write
-        provider:
-          uaa:
-            issuer-uri: http://localhost:8080/oauth/token
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/oauth/token
@@ -37,3 +26,11 @@ eureka:
   instance:
     preferIpAddress: true
 
+security:
+  oauth2:
+    client:
+      clientId: webappclient
+      clientSecret: webappclientsecret
+      accessTokenUri: http://localhost:8080/oauth/token
+      grant-type: client_credentials
+      scope: resource.read
