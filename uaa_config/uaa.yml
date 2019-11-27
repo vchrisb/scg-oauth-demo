@@ -58,11 +58,11 @@ scim:
     - user2|password|user2@provider.com|first1|last1|uaa.user,profile,email,resource.read
     - user3|password|user3@provider.com|first1|last1|uaa.user,profile
 
-issuer:
-  uri: http://localhost:8080
-
 uaa:
-  url: http://localhost:8080
+  url: ${URL:http://localhost:8080}
+
+issuer:
+  uri: ${URL:http://localhost:8080}
 
 encryption:
   active_key_label: CHANGE-THIS-KEY

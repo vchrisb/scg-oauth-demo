@@ -8,23 +8,11 @@ spring:
         enabled: false
   security:
     oauth2:
-      client:
-        registration:
-          gateway:
-            provider: uaa
-            client-id: gateway
-            client-secret: gatewaysecret
-            authorization-grant-type: authorization_code
-            scope: openid,profile,email,resource.read,resource.write
-        provider:
-          uaa:
-            issuer-uri: http://localhost:8080/oauth/token
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/oauth/token
-
+          issuer-uri: ${ISSUER_URI:http://localhost:8080/oauth/token}
 server:
-  port: 0
+  port: ${PORT:0}
 
 eureka:
   client:

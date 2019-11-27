@@ -11,9 +11,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8080/oauth/token
+          issuer-uri: ${ISSUER_URI:http://localhost:8080/oauth/token}
 server:
-  port: 0
+  port: ${PORT:0}
 
 eureka:
   client:
