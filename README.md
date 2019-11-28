@@ -1,9 +1,32 @@
 # scg-oauth-demo
 Demo Application with Spring Cloud Gateway, UAA, Eureka and Token Relay
 
-## UAA
+## Deploy to Cloud Foundry
 
-### Build UAA Container Image with pack
+### UAA
+
+#### Build
+
+```
+cd ./uaa
+./gradlew clean assemble -Pversion="74.11.0"
+```
+
+#### Deploy
+
+Adapt `uaa_config/uaa.yml` if necessary.
+Modify `manifest-uaa.yml` to your needs.
+
+```
+jar uf uaa/uaa/build/libs/cloudfoundry-identity-uaa-74.11.0.war uaa_config/uaa.yml
+cf push -f manifest-uaa.yml
+```
+
+## Deploy to Docker Desktop
+
+### UAA
+
+#### Build UAA Container Image with pack
 
 ```
 cd uaa/
@@ -11,7 +34,7 @@ export UAA_VERSION="74.11.0"
 pack build uaa:${UAA_VERSION} --builder cloudfoundry/cnb:bionic -e BP_BUILT_MODULE=uaa -e ORG_GRADLE_PROJECT_version=${UAA_VERSION} -p ./uaa
 ```
 
-### Run UAA local with docker
+#### Run UAA local with docker
 
 ```
 docker run -d --name uaa -p 8080:8080 -e UAA_CONFIG_PATH="./uaa_config" -v "$(pwd)/uaa_config":/uaa_config uaa
@@ -22,9 +45,9 @@ Add uaa to your hosts file. This is necessary locally due to cookies being unawa
 echo "127.0.0.1 uaa" | sudo tee -a /etc/hosts
 ```
 
-## Services
+### Services
 
-### Maven
+#### Maven
 
 run in multiple shells:
 ```
@@ -33,8 +56,6 @@ mvn spring-boot:run -f ./gateway/pom.xm
 mvn spring-boot:run -f ./service/pom.xm
 mvn spring-boot:run -f ./resource/pom.xm
 ```
-
-### Docker Desktop
 
 #### Build Docker Images
 
