@@ -1,4 +1,5 @@
-spring_profiles: default,hsqldb
+---
+spring_profiles: default, hsqldb
 
 oauth:
   # Always override clients on startup
@@ -58,11 +59,11 @@ scim:
     - user2|password|user2@provider.com|first1|last1|uaa.user,profile,email,resource.read
     - user3|password|user3@provider.com|first1|last1|uaa.user,profile
 
-uaa:
-  url: ${URL:http://localhost:8080}
+#uaa:
+#  url: ${URL:http://localhost:8080}
 
-issuer:
-  uri: ${URL:http://localhost:8080}
+#issuer:
+#  uri: ${URL:http://localhost:8080}
 
 encryption:
   active_key_label: CHANGE-THIS-KEY
@@ -153,3 +154,4 @@ jwt:
       dclYMhNQybhiAdYdhXIWFGMcqRtBA4uiUZJYxZ4bpI+AV5B4qDNkfdJYCBTE3V6h
       xQIDAQAB
       -----END PUBLIC KEY-----
+

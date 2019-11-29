@@ -37,7 +37,7 @@ pack build uaa:${UAA_VERSION} --builder cloudfoundry/cnb:bionic -e BP_BUILT_MODU
 #### Run UAA local with docker
 
 ```
-docker run -d --name uaa -p 8080:8080 -e UAA_CONFIG_PATH="./uaa_config" -v "$(pwd)/uaa_config":/uaa_config uaa
+docker run -d --name uaa -p 8080:8080 -e UAA_URL=http://localhost:8080 -e ISSUER_URI=http://localhost:8080 -e UAA_CONFIG_PATH="./uaa_config" -v "$(pwd)/uaa_config":/uaa_config uaa
 ```
 
 Add uaa to your hosts file. This is necessary locally due to cookies being unaware of ports.
